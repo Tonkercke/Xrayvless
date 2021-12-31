@@ -7,7 +7,7 @@
   "env": {
     "UUID": {
       "description": "VLESS UUID",
-      "value": "c2beae96-ef1b-4888-8e42-f460721d60ab"
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     }
   },
   "website": "https://github.com/Tonkercke/",
