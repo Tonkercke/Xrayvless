@@ -27,7 +27,9 @@ vless 相比 vmess 性能更加优秀，占用资源更少，运行更加稳定�
 
 ### UUID
 
-`UUID` 默认为 `c2beae96-ef1b-4888-8e42-f460721d60ab` 可自行设置。
+`UUID` 默认为 `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` UUID需要自行更改。
+
+'UUID' 可在 https://www.uuidgenerator.net/ 中獲取。
 
 ## 流量中转
 
