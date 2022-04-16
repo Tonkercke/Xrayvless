@@ -15,7 +15,8 @@ vless 相比 vmess 性能更加优秀，占用资源更少，运行更加稳定�
 
 ### 路径
 
-`WebSocket` 路径(配置文件中的 `path` )为 `/gyfdqwaed` 。
+`WebSocket` 路径改为自定义，这个路径名称相当于WS的密码，所以要尽可能的长，建议超过20位。
+注意：路径名称只能是数字大小字母和一部分符号组成，符号不可以包含 “ / \ : *?"<>| ”。
 
 ### 端口
 
@@ -35,13 +36,79 @@ vless 相比 vmess 性能更加优秀，占用资源更少，运行更加稳定�
 
 可以使用cloudflare的workers来`中转流量`，配置为：  
 
-addEventListener(  
-&emsp;&emsp;"fetch",event => {  
-&emsp;&emsp;&emsp;&emsp;let url=new URL(event.request.url);  
-&emsp;&emsp;&emsp;&emsp;url.hostname="xx.herokuapp.com";//你的heroku域名    
-&emsp;&emsp;&emsp;&emsp;let request=new Request(url,event.request);  
-&emsp;&emsp;&emsp;&emsp;event. respondWith(  
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;fetch(request)  
-&emsp;&emsp;&emsp;&emsp;)  
-&emsp;&emsp;}  
-)  
+1.适用单一应用的反代代码
+
+```
+addEventListener(
+  "fetch", event => {
+    let url = new URL(event.request.url);
+    url.host = "appname.herokuapp.com";
+    let request = new Request(url, event.request);
+    event.respondWith(
+      fetch(request)
+    )
+  }
+)
+```
+
+2.适用单双日循环执行的反代代码
+
+```
+const SingleDay = '应用程序名1.herokuapp.com'
+const DoubleDay = '应用程序名2.herokuapp.com'
+addEventListener(
+    "fetch",event => {
+    
+        let nd = new Date();
+        if (nd.getDate()%2) {
+            host = SingleDay
+        } else {
+            host = DoubleDay
+        }
+        
+        let url=new URL(event.request.url);
+        url.hostname=host;
+        let request=new Request(url,event.request);
+        event. respondWith(
+            fetch(request)
+        )
+    }
+)
+```
+
+3.适用多实例循环执行的反代代码
+
+```
+const Day0 = 'app0.herokuapp.com'
+const Day1 = 'app1.herokuapp.com'
+const Day2 = 'app2.herokuapp.com'
+const Day3 = 'app3.herokuapp.com'
+const Day4 = 'app4.herokuapp.com'
+addEventListener(
+    "fetch",event => {
+    
+        let nd = new Date();
+        let day = nd.getDate() % 5;
+        if (day === 0) {
+            host = Day0
+        } else if (day === 1) {
+            host = Day1
+        } else if (day === 2) {
+            host = Day2
+        } else if (day === 3){
+            host = Day3
+        } else if (day === 4){
+            host = Day4
+        } else {
+            host = Day1
+        }
+        
+        let url=new URL(event.request.url);
+        url.hostname=host;
+        let request=new Request(url,event.request);
+        event. respondWith(
+            fetch(request)
+        )
+    }
+)
+```

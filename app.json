@@ -1,6 +1,6 @@
 {
-  "name": "vlessheroku",
-  "description": "Deploy vless on Heroku.",
+  "name": "xrayvless",
+  "description": "xrayvless",
   "keywords": [
     "vless"
   ],
@@ -8,9 +8,12 @@
     "UUID": {
       "description": "VLESS UUID",
       "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    },
+    "WP":{
+      "description": "ws path",
+      "value": "xxxxxxxx"
     }
   },
-  "website": "https://github.com/Tonkercke/",
-  "repository": "https://github.com/Tonkercke/Xrayvless",
+  "repository": "",
   "stack": "container"
 }
